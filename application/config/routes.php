@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -68,5 +68,6 @@ $route['loan_type'] = 'loans/loan_type';
 $route['getLoanType'] = 'loans/getLoanType';
 $route['agreement/(:num)'] = 'loans/agreement/$1';
 $route['authority/(:num)'] = 'loans/authority/$1';
+$route['ledger/(:num)'] = 'loans/ledger/$1';
 
 $route['transactions'] = 'payments/transactions';

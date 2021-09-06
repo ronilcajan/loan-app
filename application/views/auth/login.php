@@ -1,9 +1,9 @@
 <form action="<?= site_url('auth/login') ?>" method="POST" class="mt-5 pt-5">
 	<div class="container container-login animated fadeIn">
-		
+
 		<h3 class="text-center">Loan Application System</h3>
 		<h5 class="text-center">Sign In Here</h5>
-		<?php if($message !== null): ?>
+		<?php if ($message !== null) : ?>
 			<div class="alert alert-danger" role="alert">
 				<?= $message ?>
 			</div>
@@ -21,11 +21,11 @@
 				</div>
 			</div>
 			<div class="row form-sub m-0">
-				<div class="custom-control custom-checkbox">
+				<!-- <div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" name="remember" id="rememberme" value="1">
 					<label class="custom-control-label" for="rememberme">Remember Me</label>
-				</div>
-				
+				</div> -->
+
 				<!-- <a href="forgot_password" class="link float-right">Forgot Password?</a> -->
 			</div>
 			<div class="form-action mb-3">

@@ -9,7 +9,7 @@
                 <h4 class="page-title"><?= $title ?></h4>
             </div>
             <div class="col-auto">
-                <a href="javascript:void(0)" class="btn btn-primary ml-2" onclick="printDiv('printThis')"> 
+                <a href="javascript:void(0)" class="btn btn-primary ml-2" onclick="printDiv('printThis')">
                     Print
                 </a>
             </div>
@@ -26,17 +26,18 @@
                     <div class="card-body">
                         <div class="separator-solid"></div>
                         <div class="">
-                            <p>This loan agreement is made and will be effective on 
-                                <input value="<?= date('m/d/Y', strtotime($loans->date_started)) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print"/></p>
+                            <p>This loan agreement is made and will be effective on
+                                <input value="<?= date('m/d/Y', strtotime($loans->date_started)) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" />
+                            </p>
                             <p>BETWEEN</p>
                             <p>
-                                <input value="<?= $borrower->name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print"/>
+                                <input value="<?= $borrower->name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" />
                                 hereinafter referred to as the "Borrowers" with a street address of
                                 <input value="<?= $borrower->address ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:100%" />
                             </p>
                             <p>AND</p>
                             <p>
-                                <input value="<?= $user->first_name.' '.$user->last_name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print"/>
+                                <input value="<?= $user->first_name . ' ' . $user->last_name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" />
                                 hereinafter referred to as the "Lender" with a street address of
                                 <input value="<?= $user->address ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:100%" />
                             </p>
@@ -49,12 +50,12 @@
                                 Within
                                 <input value="<?= $loans->terms ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:50px" />
                                 months from today, Borrowers promises to pay the Lender
-                                <input onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print"/>
+                                <input onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:380px" />
                             </p>
                             <p>
                                 Pesos (P
-                                <input value="<?= number_format($loans->principal,2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:150px" /> )
-                                and interest as well as other charges owed below. 
+                                <input value="<?= number_format($loans->principal, 2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:150px" /> )
+                                and interest as well as other charges owed below.
                             </p>
                             <p><b>Details of Loan: Agreed Between Borrowers and Lender:</b></p>
                             <div class="row">
@@ -62,7 +63,7 @@
                                     <p>Amount of Loan:</p>
                                 </div>
                                 <div class="col-md-8 col-8">
-                                    :P <input value="<?= number_format($loans->principal,2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
+                                    :P <input value="<?= number_format($loans->principal, 2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
                                 </div>
                             </div>
                             <div class="row">
@@ -86,7 +87,7 @@
                                     <p><b>Net Proceeds</b></p>
                                 </div>
                                 <div class="col-md-8 col-8">
-                                    :P <input value="<?= number_format($loans->principal,2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
+                                    :P <input value="<?= number_format($loans->principal, 2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -95,7 +96,7 @@
                                 </div>
                                 <div class="col-md-8 col-8">
                                     : <input value="<?= $loans->interest ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
-                                %
+                                    %
                                 </div>
                             </div>
                             <div class="row">
@@ -103,7 +104,7 @@
                                     <p>Monthly Amortization</p>
                                 </div>
                                 <div class="col-md-8 col-8">
-                                    :P <input value="<?= number_format($loans->monthly,2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
+                                    :P <input value="<?= number_format($loans->monthly, 2) ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" />
                                 </div>
                             </div>
                             <div class="row">
@@ -143,7 +144,7 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-md-6 col-6 text-center">
-                                    <p><input value="<?= $user->first_name.' '.$user->last_name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" /></p>
+                                    <p><input value="<?= $user->first_name . ' ' . $user->last_name ?>" onchange="this.setAttribute('value', this.value)" class="fw-bold text-center input_print" style="width:250px" /></p>
                                     <p>Authorize Representative/Lender</p>
                                 </div>
                             </div>
