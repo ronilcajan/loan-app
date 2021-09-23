@@ -327,7 +327,7 @@ class Loans extends CI_Controller
 			redirect('auth/login', 'refresh');
 		}
 
-		$data['title'] = 'Loan Ledger';
+		$data['title'] = 'Borrowers Loan';
 		$data['borrower'] = $this->loanModel->getborrowers($id);
 
 		$data['loans'] = $this->loanModel->getloans($id);

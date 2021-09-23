@@ -34,6 +34,9 @@
                         <div class="invoice-desc">
                             Loan No: L0<?= $loans->id ?>
                         </div>
+                        <div class="invoice-desc">
+                            Total Amount Loan: P <?= number_format($loans->total_amount, 2) ?>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="separator-solid"></div>
@@ -74,50 +77,77 @@
                                     <?= $loans->interest ?> %
                                 </p>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-3 pt-0 info-invoice">
-                                <h5 class="sub">Total Loan Amount</h5>
+                            <div class="col-md-3 col-sm-3 col-3 info-invoice">
+                                <h5 class="sub">Penalty</h5>
                                 <p>
-                                    P <?= number_format($loans->total_amount, 2) ?>
+                                    <?= $loans->penalty ?> %
                                 </p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="invoice-detail">
-                                    <div class="invoice-top">
-                                        <h3 class="title"><strong>Payment summary</strong></h3>
-                                    </div>
                                     <div class="invoice-item">
                                         <div class="table-responsive">
-                                            <table class="table table-striped">
+                                            <table class="table-bordered w-100" id="ledger">
                                                 <thead>
                                                     <tr>
-                                                        <td class="text-center"><strong>No</strong></td>
-                                                        <td class="text-center"><strong>Date</strong></td>
-                                                        <td class="text-right"><strong>Amount</strong></td>
-                                                        <td class="text-right"><strong>Interest</strong></td>
-                                                        <td class="text-right"><strong>Principal</strong></td>
-                                                        <td class="text-right"><strong>Penalty</strong></td>
-                                                        <td class="text-right"><strong>Balance</strong></td>
+                                                        <th colspan="9" class="text-center">Payment Ledger</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2">Principal Loan Amount</th>
+                                                        <th colspan="3"></th>
+                                                        <th colspan="3" class="text-center">Breakdown of Payment</th>
+                                                        <th class="text-right"><?= number_format($loans->principal, 2) ?></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center">No</th>
+                                                        <th class="text-center">Date</th>
+                                                        <th class="text-right">Total Due</th>
+                                                        <th class="text-right">Paid</th>
+                                                        <th class="text-right">Unpaid</th>
+                                                        <th class="text-right">Principal</th>
+                                                        <th class="text-right">Interest</th>
+                                                        <th class="text-right">Penalty</th>
+                                                        <th class="text-right">Balance</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php if (!empty($payments)) :
                                                         $no = 1;
                                                         $amount = 0;
-                                                        $total = $loans->total_amount; ?>
+                                                        $total = $loans->principal; ?>
                                                         <?php foreach ($payments as $row) :
-                                                            $amount += $row['amount'];
+                                                            $due = $row['due'] + $row['p_interest'] + $row['p_penalty'];
+                                                            if (!$row['amount']) {
+                                                                $principal = 0;
+                                                            } else {
+                                                                $principal = $row['amount'] - ($row['p_interest'] + $row['p_penalty']);
+                                                            }
+
+                                                            $amount += $principal;
                                                             $balance = $total - $amount;
                                                         ?>
                                                             <tr>
                                                                 <td><?= $no ?></td>
-                                                                <td><?= !empty($row['date']) ? date('m/d/Y', strtotime($row['date'])) : null ?></td>
-                                                                <td class="text-right"><?= !empty($row['date']) ? 'P ' . number_format($row['amount'], 2) : null ?></td>
-                                                                <td class="text-right"><?= !empty($row['date']) && !empty($row['amount']) ? 'P ' . number_format($row['p_interest'], 2) : null ?></td>
-                                                                <td class="text-right"><?= !empty($row['date']) && !empty($row['amount']) ? 'P ' . number_format($row['due'], 2) : null ?></td>
-                                                                <td class="text-right"><?= !empty($row['date']) && !empty($row['p_penalty']) ? 'P ' . number_format($row['p_penalty'], 2) : null ?></td>
-                                                                <td class="text-right"><?= !empty($row['date']) ? 'P ' . number_format($balance, 2) : null ?></td>
+                                                                <td class="text-center"><?= !empty($row['date']) ? date('m/d/Y', strtotime($row['date'])) : null ?></td>
+                                                                <td class="text-right"><?= !empty($row['date']) ? number_format($due, 2) : null ?></td>
+                                                                <td class="text-right"><?= !empty($row['date']) ? number_format($row['amount'], 2) : null ?></td>
+                                                                <td class="text-right">
+                                                                    <?= $row['status'] == 'Paid' ? '0.00' : null ?>
+                                                                    <?= $row['status'] == 'Partial' || $row['status'] == 'Unpaid' ? number_format($due - $row['amount'], 2) : null ?>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <?= $row['status'] == 'Paid' ? number_format($principal, 2) : null ?>
+                                                                    <?= $row['status'] == 'Partial' ? number_format($principal, 2) : null ?>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <?= $row['status'] == 'Paid' || $row['status'] == 'Partial' ? number_format($row['p_interest'], 2) : null ?>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <?= $row['status'] == 'Paid' || $row['status'] == 'Partial' ? number_format($row['p_penalty'], 2) : null ?>
+                                                                </td>
+                                                                <td class="text-right"><?= !empty($row['date']) ? number_format($balance, 2) : null ?></td>
                                                             </tr>
                                                         <?php $no++;
                                                         endforeach ?>

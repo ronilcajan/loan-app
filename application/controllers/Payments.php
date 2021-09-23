@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Payments extends CI_Controller {
+class Payments extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -21,28 +22,40 @@ class Payments extends CI_Controller {
 
 	public function transactions()
 	{
-		if (!$this->ion_auth->logged_in())
-		{
+		if (!$this->ion_auth->logged_in()) {
 			// redirect them to the login page
 			redirect('auth/login', 'refresh');
 		}
 		$data['transac'] = $this->paymentModel->getTransactions();
-		
+
 		$data['title'] = 'Transactions History';
 
 		$this->base->load('default', 'payments/transactions', $data);
 	}
 
-	public function save_payment(){
+	public function reports()
+	{
+		if (!$this->ion_auth->logged_in()) {
+			// redirect them to the login page
+			redirect('auth/login', 'refresh');
+		}
+		$data['reports'] = $this->paymentModel->reports();
+
+		$data['title'] = 'Loan Reports';
+
+		$this->base->load('default', 'report/manage', $data);
+	}
+
+	public function save_payment()
+	{
 		$this->session->set_flashdata('success', 'danger');
 
-		$this->form_validation->set_rules('pment_id','Payment ID', 'trim|required');
+		$this->form_validation->set_rules('pment_id', 'Payment ID', 'trim|required');
 
-		if ($this->form_validation->run() == FALSE){
+		if ($this->form_validation->run() == FALSE) {
 
 			$this->session->set_flashdata('message', validation_errors());
-
-        }else{
+		} else {
 
 			$payment_id = $this->input->post('pment_id');
 			$amount = $this->input->post('amount');
@@ -50,15 +63,15 @@ class Payments extends CI_Controller {
 			$date = $this->input->post('date');
 			$skip = $this->input->post('skip');
 			$terms = $this->input->post('terms');
-			$next_pay = $payment_id+1;
-			
+			$next_pay = $payment_id + 1;
+
 			$loan = $this->paymentModel->getLoan($payment_id);
-			
+
 			$to_pay = $loan->due + $loan->p_interest + $loan->p_penalty;
 
-            if($loan){
+			if ($loan) {
 				// when payment skip for a month
-				if($skip=='Skip'){
+				if ($skip == 'Skip') {
 
 					$data = array(
 						'remarks' => 'Skip Payment',
@@ -66,11 +79,11 @@ class Payments extends CI_Controller {
 						'date' => $date,
 					);
 
-					$this->paymentModel->updatePayment($data, $payment_id); 
+					$this->paymentModel->updatePayment($data, $payment_id);
 
 					$due = $loan->due + ($loan->principal / $loan->terms);
-					$interest = $loan->p_interest + ($loan->principal * ($loan->interest/100));
-					$penalty = ($due+$interest) * ($loan->penalty/100);
+					$interest = $loan->p_interest + ($loan->principal * ($loan->interest / 100));
+					$penalty = ($due + $interest) * ($loan->penalty / 100);
 
 					$data1 = array(
 						'due' => $due,
@@ -79,13 +92,12 @@ class Payments extends CI_Controller {
 						'status' => 'Processing'
 					);
 
-					$this->paymentModel->updatePayment($data1,$next_pay);
+					$this->paymentModel->updatePayment($data1, $next_pay);
 					$this->session->set_flashdata('message', 'Payment has been skip!');
-
-				}else{
+				} else {
 
 					// When payment is exact as monthly payment
-					if($amount == $to_pay){
+					if ($amount == $to_pay) {
 						$data = array(
 							'remarks' => $notes,
 							'status' => 'Paid',
@@ -96,29 +108,29 @@ class Payments extends CI_Controller {
 						$this->paymentModel->updatePayment($data, $payment_id);
 
 						// check if this payment is the last to pay
-						if($terms != $loan->terms){
+						if ($terms != $loan->terms) {
 							$due = ($loan->principal / $loan->terms);
-							$interest = ($loan->principal * ($loan->interest/100));
-		
+							$interest = ($loan->principal * ($loan->interest / 100));
+
 							$data1 = array(
 								'due' => $due,
 								'p_interest' => $interest,
 								'status' => 'Processing'
 							);
-							$this->paymentModel->updatePayment($data1,$next_pay);
-						}else{
+							$this->paymentModel->updatePayment($data1, $next_pay);
+						} else {
 
 							$loan_d = array(
 								'status' => 'Paid',
 							);
-				
+
 							$this->loanModel->update_loan($loan_d, $loan->loan_id);
 						}
 
 						$this->session->set_flashdata('message', 'Payment successful!');
-						
-					// when payment is more than the monthly amount
-					}elseif($amount > $to_pay){
+
+						// when payment is more than the monthly amount
+					} elseif ($amount > $to_pay) {
 						$data = array(
 							'remarks' => $notes,
 							'status' => 'Paid',
@@ -131,19 +143,19 @@ class Payments extends CI_Controller {
 
 						$total = $amount - $to_pay; #calculate the excess payment and add to the due
 						$due = ($loan->principal / $loan->terms) - $total;
-						$interest = ($loan->principal * ($loan->interest/100));
-	
+						$interest = ($loan->principal * ($loan->interest / 100));
+
 						$data1 = array(
 							'due' => $due,
 							'p_interest' => $interest,
 							'status' => 'Processing'
 						);
 
-						$this->paymentModel->updatePayment($data1,$next_pay);
+						$this->paymentModel->updatePayment($data1, $next_pay);
 						$this->session->set_flashdata('message', 'Payment successful!');
 
-					// when payment is lacking
-					}else{
+						// when payment is lacking
+					} else {
 
 						$data = array(
 							'remarks' => $notes,
@@ -158,9 +170,9 @@ class Payments extends CI_Controller {
 						$remaining = $loan->due - $interest;
 
 						$due = ($loan->principal / $loan->terms) + $remaining;
-						$interest = ($loan->principal * ($loan->interest/100));
-						$penalty = ($due+$interest) * ($loan->penalty/100);
-	
+						$interest = ($loan->principal * ($loan->interest / 100));
+						$penalty = ($due + $interest) * ($loan->penalty / 100);
+
 						$data1 = array(
 							'due' => $due,
 							'p_interest' => $interest,
@@ -168,9 +180,8 @@ class Payments extends CI_Controller {
 							'status' => 'Processing'
 						);
 
-						$this->paymentModel->updatePayment($data1,$next_pay);
+						$this->paymentModel->updatePayment($data1, $next_pay);
 						$this->session->set_flashdata('message', 'Payment successful!');
-
 					}
 
 					$transac = array(
@@ -183,11 +194,10 @@ class Payments extends CI_Controller {
 					$this->paymentModel->insert_transaction($transac);
 					$this->session->set_flashdata('success', 'success');
 				}
-            }else{
-                $this->session->set_flashdata('message', 'Something went wrong. Please refresh the page and try again!');
-            }
+			} else {
+				$this->session->set_flashdata('message', 'Something went wrong. Please refresh the page and try again!');
+			}
 		}
 		redirect($_SERVER['HTTP_REFERER'], 'refresh');
 	}
-
 }

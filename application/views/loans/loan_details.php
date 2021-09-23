@@ -25,10 +25,10 @@ $gro = $this->ion_auth->get_users_groups()->row();
             <div class="card-header" style="background-image: url('<?= site_url() ?>/assets/img/blogpost.jpg')">
                 <div class="profile-picture">
                     <div class="avatar avatar-xl">
-                        <?php if(empty($borrower->avatar)): ?>
+                        <?php if (empty($borrower->avatar)) : ?>
                             <img class="avatar-img rounded-circle" alt="preview" src="<?= site_url() ?>assets/img/person.png" />
-                        <?php else: ?>
-                            <img class="avatar-img rounded-circle" alt="preview" src="<?= preg_match('/data:image/i', $borrower->avatar) ? $borrower->avatar : site_url().'assets/uploads/avatar/'.$user->avatar ?>" />
+                        <?php else : ?>
+                            <img class="avatar-img rounded-circle" alt="preview" src="<?= preg_match('/data:image/i', $borrower->avatar) ? $borrower->avatar : site_url() . 'assets/uploads/avatar/' . $user->avatar ?>" />
                         <?php endif ?>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ $gro = $this->ion_auth->get_users_groups()->row();
                     </tr>
                     <tr>
                         <td>Birthdate:</td>
-                        <td><?= date('F d, Y',strtotime($borrower->birthdate)) ?></td>
+                        <td><?= date('F d, Y', strtotime($borrower->birthdate)) ?></td>
                     </tr>
                     <tr>
                         <td>Contact No.:</td>
@@ -58,18 +58,18 @@ $gro = $this->ion_auth->get_users_groups()->row();
                         <td>Address:</td>
                         <td><?= $borrower->address ?></td>
                     </tr>
-                        <tr>
-                            <td>Spouse Name:</td>
-                            <td><?= $borrower->spouse_name ?></td>
-                        </tr>
-                        <tr>
-                            <td>Spouse Occupation:</td>
-                            <td><?= $borrower->spouse_occupation ?></td>
-                        </tr>
-                        <tr>
-                            <td>Spouse Employer Address:</td>
-                            <td><?= $borrower->spouse_em_address ?></td>
-                        </tr>
+                    <tr>
+                        <td>Spouse Name:</td>
+                        <td><?= $borrower->spouse_name ?></td>
+                    </tr>
+                    <tr>
+                        <td>Spouse Occupation:</td>
+                        <td><?= $borrower->spouse_occupation ?></td>
+                    </tr>
+                    <tr>
+                        <td>Spouse Employer Address:</td>
+                        <td><?= $borrower->spouse_em_address ?></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -85,16 +85,16 @@ $gro = $this->ion_auth->get_users_groups()->row();
                         <table class="w-100">
                             <tr>
                                 <td>Status:</td>
-                                <td> <?= $borrower->status=='Active' ? '<span class="badge badge-primary badge-pill mt-2">Active</span>' : '<span class="badge badge-success badge-pill">Paid</span>' ?></td>
+                                <td> <?= $borrower->status == 'Active' ? '<span class="badge badge-primary badge-pill mt-2">Active</span>' : '<span class="badge badge-success badge-pill">Paid</span>' ?></td>
                             </tr>
                             <tr>
                                 <td>Loan ID:</td>
                                 <td>L0<?= $borrower->id ?></td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Principal:</td>
-                                <td>P <?= number_format($borrower->principal,2) ?></td>
+                                <td>P <?= number_format($borrower->principal, 2) ?></td>
                             </tr>
                             <tr>
                                 <td>Loan Type:</td>
@@ -122,11 +122,11 @@ $gro = $this->ion_auth->get_users_groups()->row();
                             </tr>
                             <tr>
                                 <td>Monthly:</td>
-                                <td>P <?= number_format($borrower->monthly,2) ?></td>
+                                <td>P <?= number_format($borrower->monthly, 2) ?></td>
                             </tr>
                             <tr>
                                 <td>Total Amount:</td>
-                                <td>P <?= number_format($borrower->total_amount,2) ?></td>
+                                <td>P <?= number_format($borrower->total_amount, 2) ?></td>
                             </tr>
                             <tr>
                                 <td>Notes:</td>
@@ -153,7 +153,7 @@ $gro = $this->ion_auth->get_users_groups()->row();
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped table-hover" >
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Month</th>
@@ -169,43 +169,40 @@ $gro = $this->ion_auth->get_users_groups()->row();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if(!empty($loans)): ?>
-                        <?php 
-                            $i=1;
-                            $total = 0; 
-                            foreach ($loans as $row):?>
+                    <?php if (!empty($loans)) : ?>
+                        <?php
+                        $i = 1;
+                        $total = 0;
+                        foreach ($loans as $row) : ?>
                             <tr>
                                 <td><?= date('F', strtotime($row['due_date'])) ?></td>
-                                <td><?= empty($row['due']) ? null : number_format($row['due'],2) ?></td>
-                                <td><?= empty($row['p_interest']) ? null : number_format($row['p_interest'],2) ?></td>
-                                <td><?= empty($row['p_penalty']) ? null : number_format($row['p_penalty'],2) ?></td>
-                                <td><?= empty($row['due']) ? null : number_format(($row['due']+$row['p_interest']+$row['p_penalty']),2) ?></td>
-                                <td> <?= $row['status']=='Paid' ? '<span class="badge badge-success badge-pill">Paid</span>' : '<span class="badge badge-primary badge-pill">'.$row['status'].'</span>' ?></td>
+                                <td><?= empty($row['due']) ? null : number_format($row['due'], 2) ?></td>
+                                <td><?= empty($row['p_interest']) ? null : number_format($row['p_interest'], 2) ?></td>
+                                <td><?= empty($row['p_penalty']) ? null : number_format($row['p_penalty'], 2) ?></td>
+                                <td><?= empty($row['due']) ? null : number_format(($row['due'] + $row['p_interest'] + $row['p_penalty']), 2) ?></td>
+                                <td> <?= $row['status'] == 'Paid' ? '<span class="badge badge-success badge-pill">Paid</span>' : '<span class="badge badge-primary badge-pill">' . $row['status'] . '</span>' ?></td>
                                 <td><?= $row['remarks'] ?></td>
                                 <td><?= empty($row['amount']) ? null : number_format($row['amount'], 2) ?></td>
                                 <td><?= empty($row['date']) ? null : date('m/d/Y', strtotime($row['date'])) ?></td>
                                 <td>
-                                    <?php if($row['status']=='Processing'): ?>
-                                        <a type="button" href="#pay" data-toggle="modal" class="btn btn-link btn-primary pl-1 pr-1" title="Pay Monthly Loan" 
-                                            data-id="<?= $row['payment_id'] ?>" data-amount="<?= empty($row['due']) ? null : $row['due']+$row['p_interest']+$row['p_penalty'] ?>" 
-                                            data-terms="<?= $i ?>" data-skip="<?= $i == $borrower->terms ? 'hide' : 'show' ?>" data-payment="<?= $row['p_interest']+$row['p_penalty'] ?>"
-                                            onclick="payLoan(this)"> 
+                                    <?php if ($row['status'] == 'Processing') : ?>
+                                        <a type="button" href="#pay" data-toggle="modal" class="btn btn-link btn-primary pl-1 pr-1" title="Pay Monthly Loan" data-id="<?= $row['payment_id'] ?>" data-amount="<?= empty($row['due']) ? null : $row['due'] + $row['p_interest'] + $row['p_penalty'] ?>" data-terms="<?= $i ?>" data-skip="<?= $i == $borrower->terms ? 'hide' : 'show' ?>" data-payment="<?= $row['p_interest'] + $row['p_penalty'] ?>" onclick="payLoan(this)">
                                             <i class="icon-wallet"></i>
                                         </a>
                                     <?php endif ?>
                                 </td>
                             </tr>
-                        <?php 
-                            $i++; 
+                        <?php
+                            $i++;
                             $total += $row['amount'];
-                            endforeach;?>
+                        endforeach; ?>
                     <?php endif ?>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th colspan="6"></th>
                         <th>Total(P):</th>
-                        <th><?= number_format($total,2) ?></th>
+                        <th><?= number_format($total, 2) ?></th>
                     </tr>
                 </tfoot>
             </table>
@@ -219,7 +216,7 @@ $gro = $this->ion_auth->get_users_groups()->row();
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="display table table-striped table-hover" >
+            <table class="display table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -235,15 +232,15 @@ $gro = $this->ion_auth->get_users_groups()->row();
                     </tr>
                 </tfoot>
                 <tbody>
-                    <?php if(!empty($trans)): ?>
-                        <?php foreach ($trans as $row):?>
+                    <?php if (!empty($trans)) : ?>
+                        <?php foreach ($trans as $row) : ?>
                             <tr>
                                 <td><?= date('m/d/Y', strtotime($row['trans_date'])) ?></td>
                                 <td>P <?= number_format($row['total_amount'], 2) ?></td>
                                 <td><?= $row['username'] ?></td>
                             </tr>
-                            
-                        <?php endforeach;?>
+
+                        <?php endforeach; ?>
                     <?php endif ?>
                 </tbody>
             </table>

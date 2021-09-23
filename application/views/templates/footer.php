@@ -1,4 +1,6 @@
-<script> var SITE_URL = "<?= site_url() ?>";</script>
+<script>
+    var SITE_URL = "<?= site_url() ?>";
+</script>
 <script src="<?= site_url() ?>assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="<?= site_url() ?>assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="<?= site_url() ?>assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
@@ -24,6 +26,13 @@
 <script src="<?= site_url() ?>assets/js/plugin/select2/select2.full.min.js"></script>
 <script src="<?= site_url() ?>assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 <script src="<?= site_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
+
+<script src="<?= site_url() ?>assets/js/plugin/dataTables.dateTime.min.js"></script>
+<script src="<?= site_url() ?>assets/js/plugin/datatables/Buttons-1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="<?= site_url() ?>assets/js/plugin/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script src="<?= site_url() ?>assets/js/plugin/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script src="<?= site_url() ?>assets/js/plugin/datatables/Buttons-1.6.1/js/buttons.html5.min.js"></script>
+<script src="<?= site_url() ?>assets/js/plugin/datatables/Buttons-1.6.1/js/buttons.print.min.js"></script>
 
 <script src="<?= site_url() ?>assets/js/atlantis.js"></script>
 <script src="<?= site_url() ?>assets/webcamjs/webcam.min.js"></script>

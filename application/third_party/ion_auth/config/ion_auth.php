@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Name:    Ion Auth
  * Author:  Ben Edmunds
@@ -19,7 +20,7 @@
  * @link       http://github.com/benedmunds/CodeIgniter-Ion-Auth
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
  | -------------------------------------------------------------------------
@@ -123,13 +124,13 @@ $config['argon2_default_params']	= [
  | This is an arbitrary (long) value to protect against DOS attack.
  */
 $config['site_title']                 = "Loan Application";       // Site Title, example.com
-$config['admin_email']                = "admin@example.com";// Admin Email, admin@example.com
+$config['admin_email']                = "admin@example.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';          // Default group, use name
 $config['admin_group']                = 'admin';            // Default administrators group, use name
 $config['identity']                   = 'username';            // You can use any unique column in your table as identity column.
-															//The values in this column, alongside password, will be used for login purposes
-															  //  IMPORTANT: If you are changing it from the default (email),
-															  //  		   update the UNIQUE constraint in your DB */
+//The values in this column, alongside password, will be used for login purposes
+//  IMPORTANT: If you are changing it from the default (email),
+//  		   update the UNIQUE constraint in your DB */
 $config['min_password_length']        = 5;                   // Minimum Required Length of Password (not enforced by lib - see note above)
 $config['email_activation']           = FALSE;               // Email Activation for registration
 $config['manual_activation']          = FALSE;               // Manual Activation for registration
@@ -176,7 +177,7 @@ $config['remember_cookie_name'] = 'remember_code';
  */
 $config['use_ci_email'] = FALSE; // Send Email using the builtin CI email class, if false it will return the code and the identity
 $config['email_config'] = [
-    'mailtype' => 'html', //plaintext 'text' mails or 'html'
+	'mailtype' => 'html', //plaintext 'text' mails or 'html'
 ];
 
 /*
@@ -210,7 +211,7 @@ $config['email_forgot_password'] = 'forgot_password.tpl.php';
  | -------------------------------------------------------------------------
  */
 $config['delimiters_source']       = 'config'; 	// "config" = use the settings defined here, "form_validation" = use the settings defined in CI's form validation library
-$config['message_start_delimiter'] = '<p>'; 	// Message start delimiter
-$config['message_end_delimiter']   = '</p>'; 	// Message end delimiter
-$config['error_start_delimiter']   = '<p>';		// Error message start delimiter
-$config['error_end_delimiter']     = '</p>';	// Error message end delimiter
+$config['message_start_delimiter'] = '<span>'; 	// Message start delimiter
+$config['message_end_delimiter']   = '</span>'; 	// Message end delimiter
+$config['error_start_delimiter']   = '<span>';		// Error message start delimiter
+$config['error_end_delimiter']     = '</span>';	// Error message end delimiter

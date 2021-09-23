@@ -71,3 +71,4 @@ $route['authority/(:num)'] = 'loans/authority/$1';
 $route['ledger/(:num)'] = 'loans/ledger/$1';
 
 $route['transactions'] = 'payments/transactions';
+$route['reports'] = 'payments/reports';
